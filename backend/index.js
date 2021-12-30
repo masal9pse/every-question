@@ -21,6 +21,8 @@ io.on('connection',(socket) => {
   console.log(socket.id,'has joiend');
   socket.on('/test',(msg) => {
     console.log(msg);
+    // msg.emit('fromServer','ok 2'/);
+    socket.emit('fromServer','ok 2');
   });
 });
 // 192.168.1.14
