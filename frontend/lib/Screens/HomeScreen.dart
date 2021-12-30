@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/Pages/ChatPage.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({Key? key}) : super(key: key);
@@ -26,9 +27,27 @@ class _HomescreenState extends State<Homescreen>
         title: Text('whatsapp clone'),
         actions: [
           IconButton(onPressed: null, icon: Icon(Icons.search)),
-          IconButton(onPressed: null, icon: Icon(Icons.more_vert)),
+          // IconButton(onPressed: null, icon: Icon(Icons.more_vert)),
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(child: Text('new group'), value: 'new group'),
+                PopupMenuItem(
+                    child: Text('new broadcast'), value: 'new broadcast'),
+                PopupMenuItem(
+                    child: Text('whatsapp web'), value: 'whatsapp web'),
+                PopupMenuItem(
+                    child: Text('stared messages'), value: 'stared messages'),
+                PopupMenuItem(child: Text('settings'), value: 'settings'),
+              ];
+            },
+            onSelected: (value) {
+              print(value);
+            },
+          ),
         ],
         bottom: TabBar(
+          indicatorColor: Colors.white,
           controller: _controller,
           tabs: [
             Tab(
@@ -48,11 +67,10 @@ class _HomescreenState extends State<Homescreen>
       ),
       body: TabBarView(children: [
         Text('camera'),
-        Text('chats'),
+        ChatPage(),
         Text('status'),
         Text('calls'),
-      ],
-      controller: _controller),
+      ], controller: _controller),
     );
   }
 }
