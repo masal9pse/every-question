@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/Model/ChatModel.dart';
+import 'package:frontend/Screens/IndividualPage.dart';
 
-class CustomCard extends StatefulWidget {
-  const CustomCard({Key? key}) : super(key: key);
-
-  @override
-  _CustomCardState createState() => _CustomCardState();
-}
-
-class _CustomCardState extends State<CustomCard> {
+class CustomCard extends StatelessWidget {
+  const CustomCard({Key? key,required this.chatModel}) : super(key: key);
+  final ChatModel chatModel;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => IndividualPage()));
+      },
       child: Column(
         children: [
           ListTile(
@@ -19,7 +18,7 @@ class _CustomCardState extends State<CustomCard> {
               radius: 30,
             ),
             title: Text(
-              'dev stack',
+              chatModel.name,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             subtitle: Row(
@@ -29,11 +28,12 @@ class _CustomCardState extends State<CustomCard> {
                   width: 3,
                 ),
                 Text(
-                  'Hi dev stack',
+                  chatModel.currentMessage,
                   style: TextStyle(fontSize: 14),
                 )
               ],
             ),
+            trailing: Text(chatModel.time),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20, left: 80),
