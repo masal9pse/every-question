@@ -28,12 +28,12 @@ class CustomCard extends StatelessWidget {
                   width: 3,
                 ),
                 Text(
-                  chatModel.currentMessage,
+                  chatModel.currentMessage!,
                   style: TextStyle(fontSize: 14),
                 )
               ],
             ),
-            trailing: Text(chatModel.time),
+            trailing: Text(chatModel.time!),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20, left: 80),
