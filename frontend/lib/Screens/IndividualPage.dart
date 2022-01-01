@@ -78,32 +78,41 @@ class _IndividualPageState extends State<IndividualPage> {
                   Container(
                     width: MediaQuery.of(context).size.width - 55,
                     child: Card(
-                      margin: EdgeInsets.only(left: 2,right: 2,bottom: 8),
+                      margin: EdgeInsets.only(left: 2, right: 2, bottom: 8),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)
-                      ),
+                          borderRadius: BorderRadius.circular(25)),
                       child: TextFormField(
                         textAlignVertical: TextAlignVertical.center,
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
                         minLines: 1,
                         decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Type a message',
-                          prefixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.emoji_emotions)),
-                          suffixIcon: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              IconButton(onPressed: null, icon: Icon(Icons.attach_file)),
-                              IconButton(onPressed: null, icon: Icon(Icons.camera_alt)),
-                            ],
-                          )
-                        ),
+                            border: InputBorder.none,
+                            hintText: 'Type a message',
+                            prefixIcon: IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.emoji_emotions)),
+                            suffixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (builder) => bottomSheet());
+                                    },
+                                    icon: Icon(Icons.attach_file)),
+                                IconButton(
+                                    onPressed: null,
+                                    icon: Icon(Icons.camera_alt)),
+                              ],
+                            )),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8,right: 2),
+                    padding: const EdgeInsets.only(bottom: 8, right: 2),
                     child: CircleAvatar(
                       radius: 25,
                       child: IconButton(onPressed: null, icon: Icon(Icons.mic)),
@@ -114,6 +123,73 @@ class _IndividualPageState extends State<IndividualPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 278,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        margin: EdgeInsets.all(18),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  iconcreation(
+                      Icons.insert_drive_file, Colors.indigo, 'Document'),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  iconcreation(Icons.camera_alt, Colors.pink, 'Camera'),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  iconcreation(Icons.insert_photo, Colors.purple, 'Gallery'),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  iconcreation(Icons.headset, Colors.orange, 'Audio'),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  iconcreation(Icons.insert_drive_file, Colors.pink, 'Document'),
+                  SizedBox(
+                    width: 40,
+                  ),
+                  iconcreation(Icons.insert_drive_file, Colors.blue, 'contact'),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget iconcreation(IconData icon, Color color, String text) {
+    return InkWell(
+      onTap: () {},
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: color,
+            child: Icon(
+              icon,
+              size: 30,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(height: 5),
+          Text(text, style: TextStyle(fontSize: 12))
+        ],
       ),
     );
   }
