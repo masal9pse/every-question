@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/CustomUI/ButtonCard.dart';
 import 'package:frontend/CustomUI/ContactCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
+import 'package:frontend/Screens/CreateGroup.dart';
 
 class SelectContact extends StatefulWidget {
   const SelectContact({Key? key}) : super(key: key);
@@ -48,13 +49,11 @@ class _SelectContactState extends State<SelectContact> {
             padding: EdgeInsets.all(0),
             itemBuilder: (BuildContext context) {
               return [
-                PopupMenuItem(child: Text('Invite a friend'), value: 'Invite a friend'),
                 PopupMenuItem(
-                    child: Text('contacts'), value: 'contacts'),
-                PopupMenuItem(
-                    child: Text('Refresh'), value: 'Refresh'),
-                PopupMenuItem(
-                    child: Text('help'), value: 'help'),
+                    child: Text('Invite a friend'), value: 'Invite a friend'),
+                PopupMenuItem(child: Text('contacts'), value: 'contacts'),
+                PopupMenuItem(child: Text('Refresh'), value: 'Refresh'),
+                PopupMenuItem(child: Text('help'), value: 'help'),
               ];
             },
             onSelected: (value) {
@@ -64,15 +63,20 @@ class _SelectContactState extends State<SelectContact> {
         ],
       ),
       body: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context,index) {
-          if (index == 0){
-            return ButtonCard(icon: Icons.group,name: 'new group');
-          } else if (index == 0){
-            return ButtonCard(icon: Icons.person_add,name: 'new contact');
-          }
-          return ContactCard(contact: contacts[index]);
-        }),
+          itemCount: contacts.length,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (builder) => CreateGroup()));
+                  },
+                  child: ButtonCard(icon: Icons.group, name: 'new group'));
+            } else if (index == 0) {
+              return ButtonCard(icon: Icons.person_add, name: 'new contact');
+            }
+            return ContactCard(contact: contacts[index]);
+          }),
     );
   }
 }
