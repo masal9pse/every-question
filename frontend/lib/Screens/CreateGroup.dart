@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/CustomUI/AvatarCard.dart';
 import 'package:frontend/CustomUI/ButtonCard.dart';
 import 'package:frontend/CustomUI/ContactCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
@@ -25,6 +28,7 @@ class _CreateGroupState extends State<CreateGroup> {
     ChatModel(name: "Tester", status: "I find the bugs"),
   ];
   List<ChatModel> groups = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,25 +51,59 @@ class _CreateGroupState extends State<CreateGroup> {
           IconButton(onPressed: () {}, icon: Icon(Icons.search, size: 26)),
         ],
       ),
-      body: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context,index) {
-          return InkWell(
-            onTap: (){
-              if (contacts[index].select == false){
-                setState(() {
-                  contacts[index].select = true;
-                  groups.add(contacts[index]);
-                });
-              }else {
-                setState(() {
-                  contacts[index].select = false;
-                  groups.remove(contacts[index]);
-                });
-              }
-            },
-              child: ContactCard(contact: contacts[index]));
-        }),
+      body: Stack(
+        children: [
+          ListView.builder(
+              itemCount: contacts.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                    onTap: () {
+                      if (contacts[index].select == false) {
+                        setState(() {
+                          contacts[index].select = true;
+                          groups.add(contacts[index]);
+                        });
+                      } else {
+                        setState(() {
+                          contacts[index].select = false;
+                          groups.remove(contacts[index]);
+                        });
+                      }
+                    },
+                    child: ContactCard(contact: contacts[index]));
+              }),
+          groups.length > 0 ? Column(
+            children: [
+              Container(
+                height: 75,
+                color: Colors.white,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    if (index == 0){
+                      return Container(height: groups.length > 0 ? 90:10);
+                    }
+                    if (contacts[index-1].select == true) {
+                      return InkWell(
+                          onTap: () {
+                            groups.remove(contacts[index-1]);
+                            contacts[index-1].select = false;
+                          },
+                          child: AvtarCard(contact: contacts[index-1]));
+                    } else {
+                      return Container();
+                    }
+                  },
+                  itemCount: contacts.length,
+                ),
+              ),
+              Divider(
+                thickness: 1,
+              )
+            ],
+          ): Container(),
+        ],
+      ),
     );
   }
 }
