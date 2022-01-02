@@ -27,8 +27,10 @@ io.on('connection',(socket) => {
     console.log(clients);
   });
 
-  socket.on('message',(message) => {
-    console.log(message);
+  socket.on('message',(msg) => {
+    console.log(msg);
+    let targetId = msg.targetId;
+    if(clients[targetId]) clients[targetId].emit('message',msg);
   });
 });
 // 192.168.1.14
