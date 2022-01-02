@@ -132,9 +132,9 @@ class _IndividualPageState extends State<IndividualPage> {
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     if (messages[index].type == 'source') {
-                      return OwnMessageCard();
+                      return OwnMessageCard(message: messages[index].message);
                     } else {
-                      return ReplyCard();
+                      return ReplyCard(message: messages[index].message);
                     }
                   },
                 ),
