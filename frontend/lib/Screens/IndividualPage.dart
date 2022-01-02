@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/CustomUI/OwnMessageCard.dart';
 import 'package:frontend/CustomUI/ReplyCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage({Key? key, required this.chatModel}) : super(key: key);
@@ -12,6 +13,33 @@ class IndividualPage extends StatefulWidget {
 }
 
 class _IndividualPageState extends State<IndividualPage> {
+  late IO.Socket socket;
+  FocusNode focusNode = FocusNode();
+  bool sendButton = false;
+  TextEditingController _controller = TextEditingController();
+
+  void connect() {
+    socket = IO.io('http://192.168.1.14:5000', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    socket.connect();
+    // socket.onConnect((data) => print('connected'));
+    socket.onConnect((data) {
+      print('connected');
+      print(data);
+    });
+    print(socket.connected);
+    socket.emit('/test', 'hello world');
+    // socket.on('/test', (data) => );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,10 +124,23 @@ class _IndividualPageState extends State<IndividualPage> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25)),
                       child: TextFormField(
+                        controller: _controller,
+                        focusNode: focusNode,
                         textAlignVertical: TextAlignVertical.center,
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
                         minLines: 1,
+                        onChanged: (value) {
+                          if (value.length > 0) {
+                            setState(() {
+                              sendButton = true;
+                            });
+                          } else {
+                            setState(() {
+                              sendButton = false;
+                            });
+                          }
+                        },
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Type a message',
@@ -112,7 +153,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                 IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
-                                        backgroundColor: Colors.transparent,
+                                          backgroundColor: Colors.transparent,
                                           context: context,
                                           builder: (builder) => bottomSheet());
                                     },
@@ -126,12 +167,31 @@ class _IndividualPageState extends State<IndividualPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8, right: 2),
+                    padding: const EdgeInsets.only(
+                      bottom: 8,
+                      right: 2,
+                      left: 2,
+                    ),
                     child: CircleAvatar(
                       radius: 25,
-                      child: IconButton(onPressed: null, icon: Icon(Icons.mic)),
+                      backgroundColor: Color(0xFF128C7E),
+                      child: IconButton(
+                        icon: Icon(
+                          sendButton ? Icons.send : Icons.mic,
+                          // sendButton ? Icons.mic : Icons.send,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (sendButton) {
+                            _controller.clear();
+                            setState(() {
+                              sendButton = false;
+                            });
+                          }
+                        },
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             )
@@ -150,7 +210,7 @@ class _IndividualPageState extends State<IndividualPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         margin: EdgeInsets.all(18),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Column(
             children: [
               Row(
@@ -175,7 +235,8 @@ class _IndividualPageState extends State<IndividualPage> {
                   SizedBox(
                     width: 40,
                   ),
-                  iconcreation(Icons.insert_drive_file, Colors.pink, 'Document'),
+                  iconcreation(
+                      Icons.insert_drive_file, Colors.pink, 'Document'),
                   SizedBox(
                     width: 40,
                   ),
@@ -192,21 +253,17 @@ class _IndividualPageState extends State<IndividualPage> {
   Widget iconcreation(IconData icon, Color color, String text) {
     return InkWell(
       onTap: () {},
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: color,
-            child: Icon(
-              icon,
-              size: 30,
-              color: Colors.white,
-            ),
+      child: Column(children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: color,
+          child: Icon(
+            icon,
+            size: 30,
+            color: Colors.white,
           ),
-          SizedBox(height: 5),
-          Text(text, style: TextStyle(fontSize: 12))
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }

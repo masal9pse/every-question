@@ -4,36 +4,36 @@ import 'package:frontend/Model/ChatModel.dart';
 import 'package:frontend/Screens/SelectContact.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
-
+  const ChatPage({Key? key,required this.chatModels}) : super(key: key);
+  final List<ChatModel> chatModels;
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<ChatModel> chats = [
-    ChatModel(
-        name: 'dev stack',
-        isGroup: false,
-        currentMessage: 'Hi Everyone',
-        time: '4:00'),
-    ChatModel(
-        name: 'Kishor',
-        isGroup: false,
-        currentMessage: 'Hi Kishor',
-        time: '10:00'),
-    ChatModel(
-        name: 'masato',
-        isGroup: false,
-        currentMessage: 'Hi Everyone',
-        time: '4:00',
-        icon: 'person.svg'),
-    ChatModel(
-        name: 'dev server chat',
-        isGroup: true,
-        currentMessage: 'Hi body',
-        time: '4:00'),
-  ];
+  // List<ChatModel> chats = [
+  //   ChatModel(
+  //       name: 'dev stack',
+  //       isGroup: false,
+  //       currentMessage: 'Hi Everyone',
+  //       time: '4:00'),
+  //   ChatModel(
+  //       name: 'Kishor',
+  //       isGroup: false,
+  //       currentMessage: 'Hi Kishor',
+  //       time: '10:00'),
+  //   ChatModel(
+  //       name: 'masato',
+  //       isGroup: false,
+  //       currentMessage: 'Hi Everyone',
+  //       time: '4:00',
+  //       icon: 'person.svg'),
+  //   ChatModel(
+  //       name: 'dev server chat',
+  //       isGroup: true,
+  //       currentMessage: 'Hi body',
+  //       time: '4:00'),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +46,10 @@ class _ChatPageState extends State<ChatPage> {
       ),
       // Listの値を動的にしたい場合はbuilderを使う
       body: ListView.builder(
-        itemCount: chats.length,
+        itemCount: widget.chatModels.length,
         itemBuilder: (BuildContext context, int index) {
           return CustomCard(
-            chatModel: chats[index],
+            chatModel: widget.chatModels[index],
           );
         },
       ),

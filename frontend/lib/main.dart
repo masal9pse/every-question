@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
+import 'package:frontend/Screens/LoginScreen.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Homescreen()
+      // home: Homescreen()
+      home: LoginScreen(),
     );
   }
   late IO.Socket socket;
