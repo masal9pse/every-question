@@ -4,8 +4,9 @@ import 'package:frontend/Model/ChatModel.dart';
 import 'package:frontend/Screens/SelectContact.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key,required this.chatModels}) : super(key: key);
+  const ChatPage({Key? key,required this.chatModels,required this.sourceChat}) : super(key: key);
   final List<ChatModel> chatModels;
+  final ChatModel sourceChat;
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -49,7 +50,7 @@ class _ChatPageState extends State<ChatPage> {
         itemCount: widget.chatModels.length,
         itemBuilder: (BuildContext context, int index) {
           return CustomCard(
-            chatModel: widget.chatModels[index],
+            chatModel: widget.chatModels[index], sourceChat: widget.sourceChat,
           );
         },
       ),

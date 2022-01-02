@@ -5,8 +5,11 @@ import 'package:frontend/Model/ChatModel.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualPage extends StatefulWidget {
-  const IndividualPage({Key? key, required this.chatModel}) : super(key: key);
+  const IndividualPage(
+      {Key? key, required this.chatModel, required this.sourceChat})
+      : super(key: key);
   final ChatModel chatModel;
+  final ChatModel sourceChat;
 
   @override
   _IndividualPageState createState() => _IndividualPageState();
@@ -30,13 +33,15 @@ class _IndividualPageState extends State<IndividualPage> {
       print(data);
     });
     print(socket.connected);
-    socket.emit('/test', 'hello world');
+    print('id::  ${widget.sourceChat.id}');
+    socket.emit('signIn', widget.sourceChat.id);
     // socket.on('/test', (data) => );
   }
 
   @override
   void initState() {
     // TODO: implement initState
+    connect();
     super.initState();
   }
 

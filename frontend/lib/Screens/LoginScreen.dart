@@ -48,8 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
           itemBuilder: (context, index) => InkWell(
               onTap: () {
                 sourceChat = chatModel.removeAt(index);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (builder) => Homescreen(chatModels: chatModel)));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => Homescreen(
+                            chatModels: chatModel, sourceChat: sourceChat)));
               },
               child:
                   ButtonCard(name: chatModel[index].name, icon: Icons.person))),
