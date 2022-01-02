@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/CustomUI/OwnMessageCard.dart';
+import 'package:frontend/CustomUI/ReplyCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
 
 class IndividualPage extends StatefulWidget {
@@ -66,11 +68,23 @@ class _IndividualPageState extends State<IndividualPage> {
         ],
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height - 140,
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
-            ListView(),
+            ListView(
+              shrinkWrap: true,
+              children: [
+                OwnMessageCard(),
+                ReplyCard(),
+                OwnMessageCard(),
+                ReplyCard(),
+                OwnMessageCard(),
+                ReplyCard(),
+                OwnMessageCard(),
+                ReplyCard(),
+              ],
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -132,6 +146,8 @@ class _IndividualPageState extends State<IndividualPage> {
       height: 278,
       width: MediaQuery.of(context).size.width,
       child: Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         margin: EdgeInsets.all(18),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
