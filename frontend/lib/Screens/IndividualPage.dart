@@ -38,6 +38,11 @@ class _IndividualPageState extends State<IndividualPage> {
     // socket.on('/test', (data) => );
   }
 
+  void sendMessage(String message, int sourceId, int targetId) {
+    socket.emit('message',
+        {'message': message, 'sourceId': sourceId, 'targetId': targetId});
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -188,6 +193,9 @@ class _IndividualPageState extends State<IndividualPage> {
                         ),
                         onPressed: () {
                           if (sendButton) {
+                            sendMessage(_controller.text, widget.sourceChat.id!,
+                                widget.chatModel.id!);
+                            // 送信したメッセージをクリアしてくれる。
                             _controller.clear();
                             setState(() {
                               sendButton = false;

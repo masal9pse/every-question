@@ -26,6 +26,10 @@ io.on('connection',(socket) => {
     clients[id] = socket;
     console.log(clients);
   });
+
+  socket.on('message',(message) => {
+    console.log(message);
+  });
 });
 // 192.168.1.14
 server.listen(port,'0.0.0.0',() => {
