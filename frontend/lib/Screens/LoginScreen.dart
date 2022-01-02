@@ -43,19 +43,43 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          itemCount: chatModel.length,
-          itemBuilder: (context, index) => InkWell(
-              onTap: () {
-                sourceChat = chatModel.removeAt(index);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (builder) => Homescreen(
-                            chatModels: chatModel, sourceChat: sourceChat)));
-              },
-              child:
-                  ButtonCard(name: chatModel[index].name, icon: Icons.person))),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        // height: MediaQuery.of(context).size.height,
+        // height: 200,
+        child: Column(
+          children: [
+            Container(
+              height: 300,
+              child: ListView.builder(
+                itemCount: chatModel.length,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    sourceChat = chatModel.removeAt(index);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (builder) => Homescreen(
+                                chatModels: chatModel, sourceChat: sourceChat)));
+                  },
+                  child:
+                      ButtonCard(name: chatModel[index].name, icon: Icons.person),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(onSurface: Colors.red),
+              onPressed: null,
+              child: Text('ElevatedButton with custom disabled colors'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(onSurface: Colors.blue),
+              onPressed: null,
+              child: Text('ElevatedButton with custom disabled colors'),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
