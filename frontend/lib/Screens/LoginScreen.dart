@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/CustomUI/ButtonCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
+import 'package:frontend/Screens/QuestionPage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -50,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             Container(
+              // ListView.builderなどの高さが動的に変化するwidgetのしたに追加するときは、ListViewの高さを指定する
               height: 300,
               child: ListView.builder(
                 itemCount: chatModel.length,
@@ -60,22 +62,37 @@ class _LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (builder) => Homescreen(
-                                chatModels: chatModel, sourceChat: sourceChat)));
+                                chatModels: chatModel,
+                                sourceChat: sourceChat)));
                   },
-                  child:
-                      ButtonCard(name: chatModel[index].name, icon: Icons.person),
+                  child: ButtonCard(
+                      name: chatModel[index].name, icon: Icons.person),
                 ),
               ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.red),
-              onPressed: null,
-              child: Text('ElevatedButton with custom disabled colors'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) => QuestionPage(),
+                  ),
+                );
+              },
+              child: Text('ユーザー１でログインする'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.blue),
-              onPressed: null,
-              child: Text('ElevatedButton with custom disabled colors'),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) => QuestionPage(),
+                  ),
+                );
+              },
+              child: Text('ユーザー２でログインする。'),
             )
           ],
         ),

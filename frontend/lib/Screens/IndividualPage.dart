@@ -29,6 +29,7 @@ class _IndividualPageState extends State<IndividualPage> {
       'autoConnect': false
     });
     socket.connect();
+    print(33333);
     // socket.onConnect((data) => print('connected'));
     socket.onConnect((data) {
       print('connected');
@@ -61,6 +62,7 @@ class _IndividualPageState extends State<IndividualPage> {
   void initState() {
     // TODO: implement initState
     connect();
+    print(111);
     super.initState();
   }
 
