@@ -62,7 +62,7 @@ io.on('connection',(socket) => {
   socket.on('answer',(ans) => {
     console.log(ans);
     // let targetId = ans.targetId;
-    let targetId = ans.myId;
+    let targetId = ans.targetId;
     console.log('message.onでのclientsの取得です')
     console.log(front)
     console.log('ターゲットIdです');

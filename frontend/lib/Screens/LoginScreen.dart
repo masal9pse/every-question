@@ -76,7 +76,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (builder) => QuestionPage(),
+                    builder: (builder) => QuestionPage(
+                      questionModel: QuestionModel(myId: 1, targetId: 2),
+                    ),
                   ),
                 );
               },
@@ -84,11 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.blue),
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (builder) => QuestionPage(),
+                    builder: (builder) => QuestionPage(
+                      questionModel: QuestionModel(myId: 2, targetId: 1),
+                    ),
                   ),
                 );
               },
@@ -100,3 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+// 同じユーザーで正解して、別の端末も自動画面遷移して戻ってまた同じユーザーで正解すると自動画面遷移できる。
+// 同じユーザーで正解して。戻って別のユーザーで正解するとエラーになる。
+// hotreloadして自動画面遷移するとエラーになる。
