@@ -6,6 +6,8 @@ import 'package:frontend/CustomUI/ButtonCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
 import 'package:frontend/Screens/QuestionPage.dart';
+import 'package:frontend/States/question_state.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -50,6 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // QuestionModel questionModel = context.watch<QuestionModel>();
+    // final questionModel = Provider.of<QuestionModel>(
+    //     context,
+    //     listen: false);// モデルクラスを取得
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -80,13 +86,29 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.red),
               onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (builder) => QuestionPage(
+                //       questionModel: QuestionModel(myId: 1, targetId: 2),
+                //       // randomQuestionNumber: 1
+                //           // getQuestionRandomNumber(Config.questions),
+                //     ),
+                //   ),
+                // );
+                final questionState = Provider.of<QuestionState>(
+                    context,
+                    listen: false);// モデルクラスを取得
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (builder) => QuestionPage(
-                      questionModel: QuestionModel(myId: 1, targetId: 2),
-                      randomQuestionNumber:
-                          getQuestionRandomNumber(Config.questions),
+                  MaterialPageRoute<void>(
+                    builder: (builder) => ChangeNotifierProvider<QuestionState>.value(
+                      value: questionState,
+                      child: QuestionPage(
+                        questionModel: QuestionModel(myId: 1, targetId: 2),
+                        // randomQuestionNumber: 1
+                        // getQuestionRandomNumber(Config.questions),
+                      ),
                     ),
                   ),
                 );
@@ -101,8 +123,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   MaterialPageRoute(
                     builder: (builder) => QuestionPage(
                       questionModel: QuestionModel(myId: 2, targetId: 1),
-                      randomQuestionNumber:
-                          getQuestionRandomNumber(Config.questions),
+                      // randomQuestionNumber: 1
+                          // getQuestionRandomNumber(Config.questions),
                     ),
                   ),
                 );

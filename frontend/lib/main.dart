@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
 import 'package:frontend/Screens/LoginScreen.dart';
+import 'package:frontend/States/question_state.dart';
+import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
@@ -13,13 +15,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: Homescreen()
-      home: LoginScreen(),
+      home: MultiProvider(providers: [
+        ChangeNotifierProvider<QuestionState>(
+          create: (context) => QuestionState(),
+        ),
+      ], child: LoginScreen()),
     );
   }
+
   late IO.Socket socket;
-  void connect (){
-    socket = IO.io('http://192.168.1.14:5000',<String,dynamic> {
-      'transports':['websocket'],
+
+  void connect() {
+    socket = IO.io('http://192.168.1.14:5000', <String, dynamic>{
+      'transports': ['websocket'],
       'autoConnect': false
     });
     socket.connect();
@@ -29,7 +37,7 @@ class MyApp extends StatelessWidget {
       print(data);
     });
     print(socket.connected);
-    socket.emit('/test','hello world');
+    socket.emit('/test', 'hello world');
     // socket.on('/test', (data) => );
   }
 }
