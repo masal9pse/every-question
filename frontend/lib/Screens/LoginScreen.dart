@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/Config/quetion_data.dart';
 import 'package:frontend/CustomUI/ButtonCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
@@ -41,6 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
         id: 4),
   ];
 
+  int getQuestionRandomNumber(List questions) {
+    return Random().nextInt(questions.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,11 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   MaterialPageRoute(
                     builder: (builder) => QuestionPage(
                       questionModel: QuestionModel(myId: 1, targetId: 2),
+                      randomQuestionNumber:
+                          getQuestionRandomNumber(Config.questions),
                     ),
                   ),
                 );
               },
-              child: Text('ユーザー１でログインする'),
+              child: Text('ユーザー１でログインして回答する'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.blue),
@@ -92,6 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   MaterialPageRoute(
                     builder: (builder) => QuestionPage(
                       questionModel: QuestionModel(myId: 2, targetId: 1),
+                      randomQuestionNumber:
+                          getQuestionRandomNumber(Config.questions),
                     ),
                   ),
                 );

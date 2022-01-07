@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/Config/quetion_data.dart';
 import 'package:frontend/Screens/CorrectPage.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'dart:math';
 
 class QuestionModel {
   QuestionModel({
@@ -12,15 +14,17 @@ class QuestionModel {
 
   int myId;
   int targetId;
+
   // int quetionId;
   // int ansId;
 }
 
 class QuestionPage extends StatelessWidget {
-  QuestionPage({Key? key,required this.questionModel}) : super(key: key);
-  // QuestionPage({Key? key}) : super(key: key);
+  QuestionPage({Key? key, required this.questionModel,required this.randomQuestionNumber}) : super(key: key);
 
+  // QuestionPage({Key? key}) : super(key: key);
   final QuestionModel questionModel;
+  final int randomQuestionNumber;
   late IO.Socket socket;
 
   void connect(BuildContext context) {
@@ -52,7 +56,8 @@ class QuestionPage extends StatelessWidget {
     // エラーがでる。
     //   Navigator.push(context, MaterialPageRoute(builder: (builder) => CorrectPage()));
     // https://nobushiueshi.com/flutterinitstate%e3%81%a7%e7%94%bb%e9%9d%a2%e9%81%b7%e7%a7%bb%e3%81%99%e3%82%8b%e6%96%b9%e6%b3%95/
-    Future(() {
+    Future(
+      () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -67,19 +72,25 @@ class QuestionPage extends StatelessWidget {
 
   void ansCorrect2(BuildContext context) {
     print('正解です これはタップしたユーザーの処理です。');
-    Navigator.push(
-        context, MaterialPageRoute(builder: (builder) => CorrectPage()));
+    Future(
+      () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (builder) => CorrectPage()));
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final questions = Config.questions;
     connect(context);
     return Scaffold(
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('ナルトに出ない登場人物は？'),
+            // Text('ナルトに出ない登場人物は？'),
+            Text(questions[randomQuestionNumber]['title']),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.red),
               onPressed: () {
@@ -90,27 +101,34 @@ class QuestionPage extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.red),
               onPressed: () {},
-              child: Text('ナルト'),
+              // child: Text('ナルト'),
+              child: Text(questions[randomQuestionNumber]['questions'][0]),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.blue),
               onPressed: () {
                 // socket.emit('answer', {'myId': 1, 'ansId': 2});
-                socket.emit('answer', {'myId': questionModel.myId, 'targetId': questionModel.targetId});
+                socket.emit('answer', {
+                  'myId': questionModel.myId,
+                  'targetId': questionModel.targetId
+                });
                 ansCorrect2(context);
                 // Navigator.push(context, MaterialPageRoute(builder: (builder) => CorrectPage()));
               },
-              child: Text('ルフィ'),
+              // child: Text('ルフィ'),
+              child: Text(questions[randomQuestionNumber]['questions'][1]),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.red),
               onPressed: () {},
-              child: Text('ネジ'),
+              // child: Text('ネジ'),
+              child: Text(questions[randomQuestionNumber]['questions'][2]),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.blue),
               onPressed: null,
-              child: Text('サスケ'),
+              // child: Text('サスケ'),
+              child: Text(questions[randomQuestionNumber]['questions'][3]),
             )
           ],
         ),
