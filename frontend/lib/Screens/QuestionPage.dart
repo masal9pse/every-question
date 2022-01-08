@@ -87,8 +87,9 @@ class QuestionPage extends StatelessWidget {
     final questions = QuestionState.questions;
     // final int randomQuestionNumber = context;
     // あとでランダムに戻す。
+    // ランダムにしつつ同じ問題を出題しないようにする。
     connect(context);
-    final randomQuestionNumber = context.select((QuestionState store) => store.num);
+    final randomQuestionNumber = context.select((QuestionState store) => store.randomNumber);
     return Scaffold(
       body: Container(
         child: Consumer<QuestionState>(builder: (context, model,child) {
