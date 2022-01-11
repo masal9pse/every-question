@@ -31,21 +31,23 @@ class QuestionState extends ChangeNotifier {
 
   // int num = 0; 0 ~ 2の乱数
   int randomNumber = Random().nextInt(questions.length);
-  void changeQuestion(){
+
+  void changeQuestion() {
     questions[randomNumber]['isAns'] = true;
 
     // 最適化など問題がありそうだが、一旦これにする。
     // まずisAnsがtrueのオブジェクトを削除する。IteratorになっているのでListに直そう。
-    final createNoAnsList = questions.where((element) => !element['isAns']).toList();
+    final createNoAnsList =
+        questions.where((element) => !element['isAns']).toList();
+
     // それ以外のオブジェクトをシャッフルして１番目を取り出す。
     createNoAnsList.shuffle();
-    createNoAnsList.first;
-    // createNoAnsList[0];
     print(createNoAnsList.first);
+
     // questionsと比較して同じオブジェクトの配列の要素番号を取り出し、randomNumberに代入
     final noAnsRandomNumber = questions.indexOf(createNoAnsList.first);
     randomNumber = noAnsRandomNumber;
-   notifyListeners();
+    notifyListeners();
   }
 }
 // ChangeNotifierProvider<QuestionState>(
