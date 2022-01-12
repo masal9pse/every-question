@@ -88,58 +88,61 @@ class QuestionPage extends StatelessWidget {
     // final int randomQuestionNumber = context;
     // あとでランダムに戻す。
     // ランダムにしつつ同じ問題を出題しないようにする。
-    connect(context);
+    // connect(context);
     final randomQuestionNumber = context.select((QuestionState store) => store.randomNumber);
     return Scaffold(
       body: Container(
         child: Consumer<QuestionState>(builder: (context, model,child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Text('ナルトに出ない登場人物は？'),
-                Text(questions[randomQuestionNumber]['title']),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.red),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('戻る'),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.red),
-                  onPressed: () {},
-                  // child: Text('ナルト'),
-                  child: Text(questions[randomQuestionNumber]['questions'][0]),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.blue),
-                  onPressed: () {
-                    // socket.emit('answer', {'myId': 1, 'ansId': 2});
-                    socket.emit('answer', {
-                      'myId': questionModel.myId,
-                      'targetId': questionModel.targetId
-                    });
-                    ansCorrect2(context);
-                    // Navigator.push(context, MaterialPageRoute(builder: (builder) => CorrectPage()));
-                  },
-                  // child: Text('ルフィ'),
-                  child: Text(questions[randomQuestionNumber]['questions'][1]),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.red),
-                  onPressed: () {
-                    model.changeQuestion();
-                  },
-                  // child: Text('ネジ'),
-                  child: Text(questions[randomQuestionNumber]['questions'][2]),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.blue),
-                  onPressed: null,
-                  // child: Text('サスケ'),
-                  child: Text(questions[randomQuestionNumber]['questions'][3]),
-                ),
-              ],
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Text('ナルトに出ない登場人物は？'),
+                  Text(questions[randomQuestionNumber]['title']),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(onSurface: Colors.red),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('戻る'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(onSurface: Colors.red),
+                    onPressed: () {},
+                    // child: Text('ナルト'),
+                    child: Text(questions[randomQuestionNumber]['questions'][0]),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(onSurface: Colors.blue),
+                    onPressed: () {
+                      // socket.emit('answer', {'myId': 1, 'ansId': 2});
+                      socket.emit('answer', {
+                        'myId': questionModel.myId,
+                        'targetId': questionModel.targetId
+                      });
+                      ansCorrect2(context);
+                      // Navigator.push(context, MaterialPageRoute(builder: (builder) => CorrectPage()));
+                    },
+                    // child: Text('ルフィ'),
+                    child: Text(questions[randomQuestionNumber]['questions'][1]),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(onSurface: Colors.red),
+                    onPressed: () {
+                      model.changeQuestion();
+                    },
+                    // child: Text('ネジ'),
+                    child: Text(questions[randomQuestionNumber]['questions'][2]),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(onSurface: Colors.blue),
+                    onPressed: null,
+                    // child: Text('サスケ'),
+                    child: Text(questions[randomQuestionNumber]['questions'][3]),
+                  ),
+                ],
+              ),
             );
           }
         ),
