@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/Config/quetion_data.dart';
 import 'package:frontend/Screens/CorrectPage.dart';
-import 'package:frontend/States/question_state.dart';
+import 'package:frontend/ViewModel/question_state.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'dart:math';
@@ -99,6 +99,7 @@ class QuestionPage extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Text('ナルトに出ない登場人物は？'),
+                  Text('まさとだよ'),
                   Text(questions[randomQuestionNumber]['title']),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(onSurface: Colors.red),

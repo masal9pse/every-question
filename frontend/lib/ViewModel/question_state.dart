@@ -27,6 +27,17 @@ class QuestionState extends ChangeNotifier {
       'ans': 1,
       'isAns': false,
     },
+    {
+      'title': 'suzuCの世界大会に出場した回数は？',
+      'questions': [
+        '３回',
+        '５回',
+        '１回',
+        '2回'
+      ],
+      'ans': 1,
+      'isAns': false,
+    },
   ];
 
   // int num = 0; 0 ~ 2の乱数
@@ -35,8 +46,7 @@ class QuestionState extends ChangeNotifier {
   void changeQuestion() {
     questions[randomNumber]['isAns'] = true;
 
-    // 最適化など問題がありそうだが、一旦これにする。
-    // まずisAnsがtrueのオブジェクトを削除する。IteratorになっているのでListに直そう。
+    // 最適化など問題がありそうだが、一旦これにする。    
     final createNoAnsList =
         questions.where((element) => !element['isAns']).toList();
 

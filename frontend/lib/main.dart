@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
 import 'package:frontend/Screens/LoginScreen.dart';
-import 'package:frontend/States/question_state.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import 'ViewModel/question_state.dart';
 
 void main() {
   runApp(MyApp());

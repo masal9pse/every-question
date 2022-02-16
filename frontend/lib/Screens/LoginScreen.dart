@@ -6,17 +6,10 @@ import 'package:frontend/CustomUI/ButtonCard.dart';
 import 'package:frontend/Model/ChatModel.dart';
 import 'package:frontend/Screens/HomeScreen.dart';
 import 'package:frontend/Screens/QuestionPage.dart';
-import 'package:frontend/States/question_state.dart';
+import 'package:frontend/ViewModel/question_state.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends StatelessWidget {
   late ChatModel sourceChat;
   List<ChatModel> chatModel = [
     ChatModel(
@@ -49,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
   int getQuestionRandomNumber(List questions) {
     return Random().nextInt(questions.length);
   }
+
+  static const navigateToDetailsButtonKey = Key('navigateToDetails');
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             ElevatedButton(
+              key: navigateToDetailsButtonKey,
               style: ElevatedButton.styleFrom(onSurface: Colors.red),
               onPressed: () {
                 // Navigator.push(
@@ -96,13 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 //     ),
                 //   ),
                 // );
-                final questionState = Provider.of<QuestionState>(
-                    context,
-                    listen: false);// モデルクラスを取得
+                final questionState = Provider.of<QuestionState>(context,
+                    listen: false); // モデルクラスを取得
                 Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (builder) => ChangeNotifierProvider<QuestionState>.value(
+                    builder: (builder) =>
+                        ChangeNotifierProvider<QuestionState>.value(
                       value: questionState,
                       child: QuestionPage(
                         questionModel: QuestionModel(myId: 1, targetId: 2),
@@ -113,7 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 );
               },
-              child: Text('ユーザー１でログインして回答する'),
+              child: Text(
+                'ユーザー１でログインして回答する',                
+              ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(onSurface: Colors.blue),
@@ -124,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     builder: (builder) => QuestionPage(
                       questionModel: QuestionModel(myId: 2, targetId: 1),
                       // randomQuestionNumber: 1
-                          // getQuestionRandomNumber(Config.questions),
+                      // getQuestionRandomNumber(Config.questions),
                     ),
                   ),
                 );
